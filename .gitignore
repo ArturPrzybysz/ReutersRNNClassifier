@@ -1,7 +1,16 @@
+data/filtered_by_places
+!data/filtered_by_places/canada.json
+
+data/full
+!data/full/reuters-000.json
+
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
 *$py.class
+
+
 
 # C extensions
 *.so
