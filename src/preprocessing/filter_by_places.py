@@ -36,7 +36,7 @@ def strip_article(article):
     return {"places": article["places"][0], "body": article["body"]}
 
 
-filter_by_places_and_save(os.path.join(ROOT, "data", "full"),
-                          os.path.join(ROOT, "data", "filtered_by_places"),
+filter_by_places_and_save(os.path.join(ROOT, "data", "valid"),
+                          os.path.join(ROOT, "data", "valid"),
                           label_name,
                           legal_labels)

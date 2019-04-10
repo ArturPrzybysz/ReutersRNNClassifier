@@ -1,8 +1,13 @@
-data/filtered_by_places
-!data/filtered_by_places/canada.json
+data/learn
+!data/learn/canada.json
+data/valid
+!data/valid/canada.json
+data/test
+!data/test/canada.json
 
 data/full
 !data/full/reuters-000.json
+
 
 
 # Byte-compiled / optimized / DLL files
