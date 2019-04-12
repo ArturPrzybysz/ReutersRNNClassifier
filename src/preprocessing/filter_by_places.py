@@ -1,7 +1,7 @@
 import os
 import json
 
-from ReutersRNNClassifier.root import ROOT
+from ReutersRNNClassifier.paths import ROOT
 from ReutersRNNClassifier.src.config import legal_labels, label_name
 
 
@@ -36,7 +36,7 @@ def strip_article(article):
     return {"places": article["places"][0], "body": article["body"]}
 
 
-filter_by_places_and_save(os.path.join(ROOT, "data", "valid"),
-                          os.path.join(ROOT, "data", "valid"),
+filter_by_places_and_save(os.path.join(ROOT, "data", "train_and_test_raw"),
+                          os.path.join(ROOT, "data", "dataset"),
                           label_name,
                           legal_labels)

@@ -1,13 +1,4 @@
-data/learn
-!data/learn/canada.json
-data/valid
-!data/valid/canada.json
-data/test
-!data/test/canada.json
-
-data/full
-!data/full/reuters-000.json
-
+data
 
 
 # Byte-compiled / optimized / DLL files
