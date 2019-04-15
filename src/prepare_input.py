@@ -1,17 +1,19 @@
-import pandas as pd
 import numpy as np
+
+from keras_preprocessing.text import Tokenizer
+from tensorflow.python.keras.preprocessing.sequence import pad_sequences
 
 from sklearn.model_selection import train_test_split
 from sklearn.preprocessing import LabelEncoder
 import sklearn.utils
 
 from ReutersRNNClassifier.paths import DATASET_PATH
-from ReutersRNNClassifier.src.config import *
+from ReutersRNNClassifier.src.config import MAX_NUM_WORDS, MAX_SEQ_LENGTH
 from ReutersRNNClassifier.src.data_operations.create_dataset import combine_files_from_dir
 from ReutersRNNClassifier.src.preprocessing.preprocess_articles import preprocess_articles
 
 
-def prepare_input(word_df: pd.DataFrame):
+def prepare_input():
     learn_df = combine_files_from_dir(DATASET_PATH)
     learn_df = preprocess_articles(learn_df)
     learn_df = sklearn.utils.shuffle(learn_df)
@@ -21,25 +23,20 @@ def prepare_input(word_df: pd.DataFrame):
 
     label_encoder = LabelEncoder()
     Y = label_encoder.fit_transform(Y)
-    Y = Y.reshape(-1, 1)  # ?
-    label_mapping = label_encoder.inverse_transform([0, 1, 2, 3, 4, 5])
+    Y = Y.reshape(-1, 1)
+    label_mapping = label_encoder.inverse_transform(np.arange(6))
 
     X_train, X_test, Y_train, Y_test = train_test_split(X, Y, test_size=0.15)
 
-    X_train_matrix = bodies_to_vec(word_df, X_train)
-    X_test_matrix = bodies_to_vec(word_df, X_test)
+    tok = Tokenizer(num_words=MAX_NUM_WORDS)
+    tok.fit_on_texts(X_train)
+    sequences = tok.texts_to_sequences(X_train)
+    sequences_matrix = pad_sequences(sequences, maxlen=MAX_SEQ_LENGTH)
 
-    return X_train_matrix, X_test_matrix, Y_train, Y_test, label_mapping
+    test_sequences = tok.texts_to_sequences(X_test)
+    test_sequences_matrix = pad_sequences(test_sequences, maxlen=MAX_SEQ_LENGTH)
 
+    word_index = tok.word_index
+    print('Found %s unique tokens.' % len(word_index))
 
-def bodies_to_vec(word_df, X):
-    vec_length = word_df.iloc[0].shape[0]
-    body_count = len(X)
-
-    X_matrix = np.zeros((max_words * vec_length, body_count))
-    for i in np.arange(body_count):
-        words = X[i].split()
-        for j in np.arange(min(len(words), max_words)):
-            if words[j] in word_df.index:
-                X_matrix[j * vec_length: j * vec_length + vec_length, i] = word_df.loc[words[j]]
-    return X_matrix
+    return sequences_matrix, test_sequences_matrix, Y_train, Y_test, label_mapping, word_index

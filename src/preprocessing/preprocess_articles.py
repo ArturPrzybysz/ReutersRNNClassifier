@@ -8,10 +8,9 @@ lemmatizer = WordNetLemmatizer()
 
 def preprocess_articles(df: pd.DataFrame):
     df.body = df.body.str.lower()
-    df.body = df.body.map(_remove_numbers)
-    df.body = df.body.map(_remove_short)
-    df.body = df.body.map(_lemme)
-
+    # df.body = df.body.map(_remove_numbers)
+    # df.body = df.body.map(_remove_short)
+    # df.body = df.body.map(_lemme)
     print("x")
     return df
 

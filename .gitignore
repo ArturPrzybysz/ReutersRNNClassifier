@@ -1,5 +1,6 @@
 data
-
+src/.mdl_wts.hdf5
+sprawko
 
 # Byte-compiled / optimized / DLL files
 __pycache__/

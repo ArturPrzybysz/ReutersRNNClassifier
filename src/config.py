@@ -1,5 +1,6 @@
 legal_labels = ["west-germany", "usa", "france", "canada", "uk", "japan"]
 label_name = "places"
 
-max_words = 10000
-max_len = 100
+MAX_NUM_WORDS = 10000
+MAX_SEQ_LENGTH = 100
+EMBEDDING_DIM = 50
